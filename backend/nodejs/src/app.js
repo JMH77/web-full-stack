@@ -1,5 +1,4 @@
 import express from 'express';
-import cors from 'cors';
 import { config } from './config/config.js';
 import {buildResponse} from './utils/response.js'
 import { notFoundMiddleware } from './middlewares/notFound.middleware.js';
