@@ -1,4 +1,4 @@
-// src/routes/users.route.js
+// src/routes/user.route.js
 import { Router } from 'express';
 import { createUser, deleteUserById, getUserById, listUsers } from '../services/user.service.js';
 import { buildResponse } from '../utils/response.js';

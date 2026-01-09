@@ -4,7 +4,7 @@ import {buildResponse} from './utils/response.js'
 import { notFoundMiddleware } from './middlewares/notFound.middleware.js';
 import { corsMiddleware } from './middlewares/cors.middleware.js'
 //route 默认导出所以不需要精确到变量名
-import usersRouter from './routes/users.route.js';
+import usersRouter from './routes/user.route.js';
 
 // 创建实例
 const app = express();
