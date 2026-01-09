@@ -1,9 +1,6 @@
 import app from './app.js'; 
-import dotenv from 'dotenv';
 import { config } from './config/config.js';
 
-// 引入dotenv
-dotenv.config();
 
 // 端口写活
 // const PORT = process.env.PORT || 5000;
