@@ -11,13 +11,13 @@ function normalizeUsername(username) {
   return username.trim();
 }
 
-export function createUser(username) {
+export async function createUser(username) {
   const normalizedUsername = normalizeUsername(username);
   if (!normalizedUsername) {
     throw new Error('username is required');
   }
 
-  const existing = findUserByUsername(normalizedUsername);
+  const existing = await findUserByUsername(normalizedUsername);
   if (existing) {
     throw new Error('username already exists');
   }
@@ -29,29 +29,29 @@ export function createUser(username) {
     createdAt: Date.now()
   };
 
-  return insertUser(user);
+  return await insertUser(user);
 }
 
-export function listUsers() {
-  return findAllUsers();
+export async function listUsers() {
+  return await findAllUsers();
 }
 
-export function getUserById(id) {
+export async function getUserById(id) {
   if (id === undefined || id === null) {
     throw new Error('userId is required');
   }
-  const user = findUserByIdFromData(id);
+  const user = await findUserByIdFromData(id);
   if (!user) {
     throw new Error('user not found');
   }
   return user;
 }
 
-export function deleteUserById(id) {
+export async function deleteUserById(id) {
   if (id === undefined || id === null) {
     throw new Error('userId is required');
   }
-  const removed = deleteUserByIdFromData(id);
+  const removed = await deleteUserByIdFromData(id);
   if (!removed) {
     throw new Error('user not found');
   }
