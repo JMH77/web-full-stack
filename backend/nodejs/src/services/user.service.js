@@ -1,45 +1,59 @@
-// src/services/user.service.js
-import { db } from '../data/memory.js';
+import {
+  insertUser,
+  findAllUsers,
+  findUserById as findUserByIdFromData,
+  findUserByUsername,
+  deleteUserById as deleteUserByIdFromData
+} from '../data/user.data.js';
+
+function normalizeUsername(username) {
+  if (typeof username !== 'string') return '';
+  return username.trim();
+}
 
 export function createUser(username) {
-  if (!username) {
+  const normalizedUsername = normalizeUsername(username);
+  if (!normalizedUsername) {
     throw new Error('username is required');
+  }
+
+  const existing = findUserByUsername(normalizedUsername);
+  if (existing) {
+    throw new Error('username already exists');
   }
 
   const user = {
     id: Date.now(),
-    username
+    username: normalizedUsername,
+    role: 'user',
+    createdAt: Date.now()
   };
 
-  db.users.push(user);
-  return user;
+  return insertUser(user);
 }
 
 export function listUsers() {
-  return db.users;
+  return findAllUsers();
 }
 
 export function getUserById(id) {
-    if(!id) {
-      throw new Error('userId is required'); 
-    }
-
-    for(const entry of db.users){
-        if(String(entry.id )===String(id))  return entry;
-        else throw new Error('user notFound');
-    }
+  if (id === undefined || id === null) {
+    throw new Error('userId is required');
+  }
+  const user = findUserByIdFromData(id);
+  if (!user) {
+    throw new Error('user not found');
+  }
+  return user;
 }
 
 export function deleteUserById(id) {
-    if(!id) {
-        throw new Error('userId is required');
-    }
-
-    const index = db.users.findIndex((entry) => String(entry.id) ===String(id));
-    if(index === -1){
-       throw new Error('user not found'); 
-    }
-
-    const [removed] = db.users.splice(index,1);
-    return removed;
+  if (id === undefined || id === null) {
+    throw new Error('userId is required');
+  }
+  const removed = deleteUserByIdFromData(id);
+  if (!removed) {
+    throw new Error('user not found');
+  }
+  return removed;
 }
